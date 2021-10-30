@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+// Components
+import PostView from './components/PostView';
+import PostList from './components/PostList';
+import NotFound from './components/NotFound';
+// Styles
+// import './App.css';
 
 function App() {
+
+  const viewShow = localStorage.getItem('viewNb');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/post/1">Post page</Link>
+            </li>
+            <li>
+              <Link to="/">List</Link>
+            </li>
+            <li>
+              {viewShow}</li>
+          </ul>
+        </nav>
+
+        <Switch>
+          <Route path="/post/:id" exact>
+            <PostView />
+          </Route>
+          <Route path="/" exact>
+            <PostList />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
